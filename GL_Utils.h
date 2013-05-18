@@ -45,7 +45,7 @@ void ResetViewport()
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-2.0, 2.0, -2.0, 2.0, 0.5, 5.0);
+    glOrtho(-1.0, 1.0, -1.0, 1.0, 0.5, 5.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }

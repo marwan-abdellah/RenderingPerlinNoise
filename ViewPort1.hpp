@@ -22,6 +22,7 @@ void Keyboard(unsigned char fKey, int fX, int fY);
 void RegisterCallBacks();
 void UpdateScene();
 void Idle();
+void Reshape(int volumeWidth, int volumeHeight);
 }
 
 void ViewPort1::RegisterCallBacks()
@@ -29,6 +30,7 @@ void ViewPort1::RegisterCallBacks()
     glutDisplayFunc(ViewPort1::Display);
     glutKeyboardFunc(ViewPort1::Keyboard);
     glutIdleFunc(ViewPort1::Idle);
+    glutReshapeFunc(ViewPort1::Reshape);
 }
 
 void ViewPort1::Idle()
@@ -49,25 +51,34 @@ void ViewPort1::Display()
     glutSetWindow(view1);
 
     // Reset viewport
-    ResetViewport();
+    //ResetViewport();
 cout << "d1 \n";
-    glClear(GL_COLOR_BUFFER_BIT);
+//    glClear(GL_COLOR_BUFFER_BIT);
 
+//    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+//    glColor3f(1.0, 1.0, 1.0);
+//    glMatrixMode(GL_PROJECTION);
+//    glPushMatrix();
+//    glLoadIdentity();
+//    gluPerspective(30, 1.0, 3.0, 50.0);
+//    glMatrixMode(GL_MODELVIEW);
+//    glPushMatrix();
+//    gluLookAt(0, 0, -4.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+//    DrawScene2();
+//    glPopMatrix();
+//    glMatrixMode(GL_PROJECTION);
+//    glPopMatrix();
+
+
+    // Reset viewport
+    //ResetViewport();
+glClear(GL_COLOR_BUFFER_BIT);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glColor3f(1.0, 1.0, 1.0);
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    gluPerspective(30, 1.0, 3.0, 50.0);
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    gluLookAt(5.0, 5.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    DrawScene2();
-    glPopMatrix();
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glFlush();
-    glutSwapBuffers();
+
+
+       DrawScene2();
+        glFlush();
+       glutSwapBuffers();
 
 }
 
@@ -175,14 +186,14 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
             SetDisplayList();
             break;
         case 'c':
-            numSlices -= 1;
+            xDistance -= 1;
 //            INFO("numSlices : " + ITS(numSlices));
-            SetDisplayList();
+            SetDisplayListDistance(xDistance);;
             break;
         case 'C':
-            numSlices += 1;
+            xDistance += 1;
 //            INFO("numSlices : " + ITS(numSlices));
-            SetDisplayList();
+            SetDisplayListDistance(xDistance);
             break;
         case 'O':
             presSize += 0.05;
@@ -212,6 +223,19 @@ void ViewPort1::UpdateScene()
 {
     Volume::UpdateVolume();
     ViewPort1::Display();
+}
+
+void ViewPort1::Reshape(int volumeWidth, int volumeHeight)
+{
+   glViewport(0, 0, (GLsizei) volumeWidth, (GLsizei) volumeHeight);
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+
+   presSize = 1.0;
+   GLfloat aspect = (GLfloat) volumeHeight/(GLfloat) volumeWidth;
+   glOrtho(-presSize, presSize, -presSize * aspect, presSize * aspect, -presSize, presSize);
+   glMatrixMode(GL_MODELVIEW);
+   glLoadIdentity();
 }
 
 #endif // VIEW_PORT_1_HPP

@@ -38,8 +38,6 @@ void DrawScene()
 void DrawScene2()
 {
 
-    glColor3f(0.7, 0.7, 0.7);
-
     // Enabling 3D texturing
     glEnable(GL_TEXTURE_3D);
 
@@ -73,13 +71,13 @@ void DrawScene2()
     // Scaling
     float scaleFactor;
     if (glutGetWindow() == view1)
-        scaleFactor = _scaleW1;
+        scaleFactor = VP1::_scale;
     else if (glutGetWindow() == view2)
-        scaleFactor = _scaleW2;
+        scaleFactor = VP2::_scale;
     else if (glutGetWindow() == view3)
-        scaleFactor = _scaleW3;
+        scaleFactor = VP3::_scale;
     else
-        scaleFactor = _scaleW4;
+        scaleFactor = VP4::_scale;
 
 
     glScalef(scaleFactor, scaleFactor, scaleFactor);
@@ -87,9 +85,31 @@ void DrawScene2()
     glPushMatrix ();
 
     // Transform the viewing direction
-    glRotatef(VP3::gRot[0], 0.0, 0.0, 1.0);
-    glRotatef(VP3::gRot[1], 0.0, 1.0, 0.0);
-    glRotatef(VP3::gRot[2], 1.0, 0.0, 0.0);
+
+    if (glutGetWindow() == view1)
+    {
+        glRotatef(0, 0.0, 0.0, 1.0);
+        glRotatef(0, 0.0, 1.0, 0.0);
+        glRotatef(0, 1.0, 0.0, 0.0);
+    }
+    else if (glutGetWindow() == view2)
+    {
+        glRotatef(90, 0.0, 0.0, 1.0);
+        glRotatef(0, 0.0, 1.0, 0.0);
+        glRotatef(0, 1.0, 0.0, 0.0);
+    }
+    else if (glutGetWindow() == view3)
+    {
+        glRotatef(VP3::gRot[0], 0.0, 0.0, 1.0);
+        glRotatef(VP3::gRot[1], 0.0, 1.0, 0.0);
+        glRotatef(VP3::gRot[2], 1.0, 0.0, 0.0);
+    }
+    else
+    {
+        glRotatef(0, 0.0, 0.0, 1.0);
+        glRotatef(90, 0.0, 1.0, 0.0);
+        glRotatef(0, 1.0, 0.0, 0.0);
+    }
 
     // center the cube
     glTranslatef(-0.5, -0.5, -0.5);
@@ -120,7 +140,10 @@ void DrawScene2()
     glEnable(GL_CLIP_PLANE5);
 
     // Rendering the diaply list of the rectangles
-    glCallList(listName);
+    if (glutGetWindow() == view1)
+            glCallList(VP1::listName);
+    else
+            glCallList(listName);
 
     glPopMatrix ();
 

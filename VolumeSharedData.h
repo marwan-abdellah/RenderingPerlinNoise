@@ -56,6 +56,8 @@ float sliceArmDistance = 0.5;
 // Total number of slices
 int numSlices = 256;
 
+int xDistance = 0;
+
 // Orthographic projection parameter
 GLfloat presSize = 1.0;
 
@@ -70,37 +72,36 @@ float _scaleW4  = 0.5;
 /// Viewport 1 globals
 namespace VP1
 {
-float _scale = 0.5f;
+float _scale = 2.0f;
 float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
+
+GLuint listName;
 }
 
 /// Viewport 2 globals
 namespace VP2
 {
-float _scale = 0.5f;
+float _scale = 2.0f;
 float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
+
+GLuint listName;
 }
 
 /// Viewport 3 globals
 namespace VP3
 {
-float _scale = 0.5f;
+float _scale = 2.0f;
 float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
 
 
+GLuint listName;
 
-
-
-
-/* window width and height */
-int winW = 640;
-int winH = 480;
 
 /* old position of the mouse */
 int oldX = -13;
@@ -126,10 +127,12 @@ vec3_t gRot = {0,0,0};
 /// Viewport 4 globals
 namespace VP4
 {
-float _scale = 0.5f;
-float _xRot = 0.0f;
-float _yRot = 0.0f;
-float _zRot = 0.0;
+float _scale = 2.0f;
+float _xRot = 1.0f;
+float _yRot = 1.0f;
+float _zRot = 1.0;
+
+GLuint listName;
 }
 
 
