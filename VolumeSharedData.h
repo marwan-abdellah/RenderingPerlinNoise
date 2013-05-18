@@ -34,7 +34,7 @@ GLuint listName;
 float xRotation         = 0.0;
 float yRotation         = 0.0;
 float zRotation         = 0.0;
-float scaleFactor       = 0.5;
+
 char rotateState = 0;
 
 // Slice XY half distance
@@ -45,6 +45,14 @@ int numSlices = 256;
 
 // Orthographic projection parameter
 GLfloat presSize = 1.0;
+
+
+float scaleFactor       = 0.5;
+float _scaleW1  = 0.5;
+float _scaleW2  = 0.5;
+float _scaleW3  = 0.5;
+float _scaleW4  = 0.5;
+
 
 
 #endif // VOLUMESHAREDDATA_H

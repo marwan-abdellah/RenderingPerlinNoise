@@ -5,7 +5,11 @@
 
 #include "Shared.h"
 #include "MainScene.hpp"
+
 #include "ViewPort1.hpp"
+#include "ViewPort2.hpp"
+#include "ViewPort3.hpp"
+#include "ViewPort4.hpp"
 
 #include "Utils.h"
 #include "VolumeSharedData.h"
@@ -13,13 +17,20 @@
 
 #include "DisplayList.hpp"
 
+#include "Textures.h"
+
 using namespace std;
 
 void mainReshape(int width,  int height);
 
-void View2Display();
-void View3Display();
-void View4Display();
+
+
+
+
+void IdelMain()
+{
+//ViewPort1::Display();
+}
 
 ///
 int main(int argc, char** argv)
@@ -73,6 +84,7 @@ int main(int argc, char** argv)
     // Main window callback function
     glutReshapeFunc(mainReshape);
     glutDisplayFunc(mainDisplay);
+    glutIdleFunc(IdelMain);
 
     // Calculating the viewports dimensions
     const float viewportWidth = screenWidth / 4;
@@ -82,64 +94,41 @@ int main(int argc, char** argv)
     subWinHeight = viewportHeight;
 
 
+
+
     // View 1 viewport
     view1 = glutCreateSubWindow(window, GAP, GAP,
                                 viewportWidth, viewportHeight);
 
     ViewPort1::RegisterCallBacks();
 
+    Texture::Init();
+
 
     // View 2 viewport
     view2 = glutCreateSubWindow(window, GAP + viewportWidth + GAP,
                                 GAP, viewportWidth, viewportHeight);
-    glutDisplayFunc(View2Display);
+    ViewPort2::RegisterCallBacks();
+
+    Texture::Init();
 
     // View 3 viewport
     view3 = glutCreateSubWindow(window, GAP+viewportWidth+GAP,
                                 GAP + viewportHeight + GAP, viewportWidth, viewportHeight);
-    glutDisplayFunc(View3Display);
+    ViewPort3::RegisterCallBacks();
 
-    // View 4 viewport
+    Texture::Init();
+
+     // View 4 viewport
     view4 = glutCreateSubWindow(window, GAP + viewportWidth + GAP,
                                 GAP + viewportHeight + GAP, viewportWidth, viewportHeight);
-    glutDisplayFunc(View4Display);
+    ViewPort4::RegisterCallBacks();
 
-    // Clearing color buffer
-    glClearColor (0.0, 0.0, 0.0, 0.0);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    Texture::Init();
 
-    // Generating texture ID and binding it to the GPU
-    glGenTextures(1, &volumeTexID);
-    glBindTexture(GL_TEXTURE_3D, volumeTexID);
 
-    // Adjusting the texture parameters
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    // For automatic texture coordinate generation
-    glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-    glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
 
-    // Allocating the texture on the GPU
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA,
-                 _volumeWidth, _volumeHeight, _volumeDepth, 0,
-                 GL_RGBA, GL_UNSIGNED_BYTE, _RGBAVolumeData);
-
-    // Enable texturing
-    glEnable(GL_TEXTURE_GEN_S);
-    glEnable(GL_TEXTURE_GEN_T);
-    glEnable(GL_TEXTURE_GEN_R);
-
-    // Setting the blending function & enabling blending
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-
-    // Setting the display list
-    SetDisplayList();
 
     /// MAIN LOOP ! Should be multi-threaded
     glutMainLoop();
@@ -220,44 +209,13 @@ void mainReshape(int width,  int height)
 
 
 
-/// Display Viewport 2
-void View2Display()
-{
-    // Reset viewport
-    ResetViewport();
-
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-    gluLookAt(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    DrawScene();
-    glPopMatrix();
-    glutSwapBuffers();
-}
-
-/// Display Viewport 3
-void View3Display()
-{
-    // Reset viewport
-    ResetViewport();
-
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-    gluLookAt(0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0);
-    DrawScene();
-    glPopMatrix();
-    glutSwapBuffers();
-}
-
-
 /// Display Viewport 4
 void View4Display()
 {
 
     // Reset viewport
     ResetViewport();
-
+    cout << "d4 \n";
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(1.0, 1.0, 1.0);
     glMatrixMode(GL_PROJECTION);
@@ -267,7 +225,7 @@ void View4Display()
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     gluLookAt(5.0, 5.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    DrawScene();
+    DrawScene2();
     glPopMatrix();
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();

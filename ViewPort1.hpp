@@ -13,33 +13,61 @@
 #include "DisplayList.hpp"
 #include "MainScene.hpp"
 
+using namespace std;
 namespace ViewPort1
 {
 void Display();
 void Keyboard(unsigned char fKey, int fX, int fY);
 void RegisterCallBacks();
 void UpdateScene();
+void Idle();
 }
 
 void ViewPort1::RegisterCallBacks()
 {
     glutDisplayFunc(ViewPort1::Display);
     glutKeyboardFunc(ViewPort1::Keyboard);
+    glutIdleFunc(ViewPort1::Idle);
+}
+
+void ViewPort1::Idle()
+{
+
+    int currentWindow = glutGetWindow();
+      glutSetWindow(window);
+      glutPostRedisplay();
+      glutSetWindow(view1);
+      glutPostRedisplay();
+      glutSetWindow(currentWindow);
 }
 
 /// Display Viewport 1
 void ViewPort1::Display()
 {
+
+    glutSetWindow(view1);
+
     // Reset viewport
     ResetViewport();
-
+cout << "d1 \n";
     glClear(GL_COLOR_BUFFER_BIT);
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glColor3f(1.0, 1.0, 1.0);
+    glMatrixMode(GL_PROJECTION);
     glPushMatrix();
-    gluLookAt(0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    DrawScene();
+    glLoadIdentity();
+    gluPerspective(30, 1.0, 3.0, 50.0);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    gluLookAt(5.0, 5.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    DrawScene2();
     glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glFlush();
     glutSwapBuffers();
+
 }
 
 void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
@@ -128,11 +156,11 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
 //            INFO("Z-axis rotation : " + ITS(zRotation));
             break;
         case 'z':
-            scaleFactor *= 0.9;
+            _scaleW1 *= 0.9;
 //            INFO("ZoomFactor: " + ITS(scaleFactor));
             break;
         case 'Z':
-            scaleFactor *= 1.1;
+            _scaleW1 *= 1.1;
 //            INFO("ZoomFactor: " + ITS(scaleFactor));
             break;
         case 'x':

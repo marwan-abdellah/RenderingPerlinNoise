@@ -14,23 +14,31 @@ void mainDisplay(void);
 /// Scene Data
 void DrawScene()
 {
-//    glColor3f(0.7, 0.7, 0.7);
-//    glPushMatrix();
-//    //glTranslatef(0.0, -1.0, 0.0);
+    glColor3f(0.7, 0.7, 0.7);
+    glPushMatrix();
+    //glTranslatef(0.0, -1.0, 0.0);
 
-//    glBegin(GL_QUADS);
-//    glVertex3f(2.0, 0.0, 2.0);
-//    glVertex3f(2.0, 0.0, -2.0);
-//    glVertex3f(-2.0, 0.0, -2.0);
-//    glVertex3f(-2.0, 0.0, 2.0);
-//    glEnd();
+    glBegin(GL_QUADS);
+    glVertex3f(2.0, 0.0, 2.0);
+    glVertex3f(2.0, 0.0, -2.0);
+    glVertex3f(-2.0, 0.0, -2.0);
+    glVertex3f(-2.0, 0.0, 2.0);
+    glEnd();
 
-//    glPopMatrix();
-//    glColor3f(1.0, 1.0, 1.0);
-//    glPushMatrix();
-//    glTranslatef(0.0, 0.0, -0.5);
-//    glutWireTeapot(1.0);
-//    glPopMatrix();
+    glPopMatrix();
+    glColor3f(1.0, 1.0, 1.0);
+    glPushMatrix();
+    glTranslatef(0.0, 0.0, -0.5);
+    glutWireTeapot(1.0);
+    glPopMatrix();
+
+
+}
+
+void DrawScene2()
+{
+
+    glColor3f(0.7, 0.7, 0.7);
 
     // Enabling 3D texturing
     glEnable(GL_TEXTURE_3D);
@@ -63,6 +71,17 @@ void DrawScene()
     glPushMatrix ();
 
     // Scaling
+    float scaleFactor;
+    if (glutGetWindow() == view1)
+        scaleFactor = _scaleW1;
+    else if (glutGetWindow() == view2)
+        scaleFactor = _scaleW2;
+    else if (glutGetWindow() == view3)
+        scaleFactor = _scaleW3;
+    else
+        scaleFactor = _scaleW4;
+
+
     glScalef(scaleFactor, scaleFactor, scaleFactor);
 
     glPushMatrix ();
