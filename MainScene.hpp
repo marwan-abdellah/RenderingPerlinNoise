@@ -87,9 +87,9 @@ void DrawScene2()
     glPushMatrix ();
 
     // Transform the viewing direction
-    glRotatef(-zRotation, 0.0, 0.0, 1.0);
-    glRotatef(-yRotation, 0.0, 1.0, 0.0);
-    glRotatef(-xRotation, 1.0, 0.0, 0.0);
+    glRotatef(VP3::gRot[0], 0.0, 0.0, 1.0);
+    glRotatef(VP3::gRot[1], 0.0, 1.0, 0.0);
+    glRotatef(VP3::gRot[2], 1.0, 0.0, 0.0);
 
     // center the cube
     glTranslatef(-0.5, -0.5, -0.5);

@@ -1,6 +1,19 @@
 #ifndef VOLUMESHAREDDATA_H
 #define VOLUMESHAREDDATA_H
 
+#define X_AXIS                  0
+#define Y_AXIS                  1
+#define Z_AXIS                  2
+
+/* enumerations for the mouse buttons */
+enum {
+    UP = 1,
+    DOWN,
+};
+
+/* vector */
+typedef float vec3_t[3];
+
 #include <GL/glut.h>
 #include <iostream>
 #include <string.h>
@@ -52,6 +65,72 @@ float _scaleW1  = 0.5;
 float _scaleW2  = 0.5;
 float _scaleW3  = 0.5;
 float _scaleW4  = 0.5;
+
+
+/// Viewport 1 globals
+namespace VP1
+{
+float _scale = 0.5f;
+float _xRot = 0.0f;
+float _yRot = 0.0f;
+float _zRot = 0.0;
+}
+
+/// Viewport 2 globals
+namespace VP2
+{
+float _scale = 0.5f;
+float _xRot = 0.0f;
+float _yRot = 0.0f;
+float _zRot = 0.0;
+}
+
+/// Viewport 3 globals
+namespace VP3
+{
+float _scale = 0.5f;
+float _xRot = 0.0f;
+float _yRot = 0.0f;
+float _zRot = 0.0;
+
+
+
+
+
+
+/* window width and height */
+int winW = 640;
+int winH = 480;
+
+/* old position of the mouse */
+int oldX = -13;
+int oldY = -13;
+
+/* mouse state, UP or DOWN */
+int mState = UP;
+
+/* current axis of rotation */
+int axisRot = X_AXIS;
+
+/* amount to rotate about axis */
+float rotate = 0.0f;
+
+/* vector which describes the axis to rotate about */
+vec3_t axis = {1.0, 0.0, 0.0};
+
+/* global rotation, for use with the mouse */
+vec3_t gRot = {0,0,0};
+
+}
+
+/// Viewport 4 globals
+namespace VP4
+{
+float _scale = 0.5f;
+float _xRot = 0.0f;
+float _yRot = 0.0f;
+float _zRot = 0.0;
+}
 
 
 

@@ -12,6 +12,7 @@
 #include "VolumeSharedData.h"
 #include "DisplayList.hpp"
 #include "MainScene.hpp"
+#include "ReadVolume.hpp"
 
 using namespace std;
 namespace ViewPort1
@@ -156,11 +157,11 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
 //            INFO("Z-axis rotation : " + ITS(zRotation));
             break;
         case 'z':
-            _scaleW1 *= 0.9;
+            VP1::_scale *= 0.9;
 //            INFO("ZoomFactor: " + ITS(scaleFactor));
             break;
         case 'Z':
-            _scaleW1 *= 1.1;
+            VP1::_scale *= 1.1;
 //            INFO("ZoomFactor: " + ITS(scaleFactor));
             break;
         case 'x':
@@ -209,7 +210,7 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
 
 void ViewPort1::UpdateScene()
 {
-    //Volume VoluUpdateVolume();
+    Volume::UpdateVolume();
     ViewPort1::Display();
 }
 
