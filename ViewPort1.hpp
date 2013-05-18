@@ -1,5 +1,5 @@
-#ifndef VIEW_PORT_1_HPP
-#define VIEW_PORT_1_HPP
+#ifndef VIEWPORT1_HPP
+#define VIEWPORT1_HPP
 
 #include <iostream>
 #include <string.h>
@@ -13,6 +13,8 @@
 #include "DisplayList.hpp"
 #include "MainScene.hpp"
 #include "ReadVolume.hpp"
+
+#include "ViewPorts.h"
 
 using namespace std;
 namespace ViewPort1
@@ -89,193 +91,130 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
     case ' ':   /// Toggle slicing
         VP1::_slicingMode = !VP1::_slicingMode;
         SetDisplayListDistance(VP1::_sliceIndex);
-        ViewPort1::UpdateScene();
         break;
     case '[':   /// +ve slicing
         VP1::_sliceIndex -= 1;
         SetDisplayListDistance(VP1::_sliceIndex);
-        ViewPort1::UpdateScene();
         break;
     case ']':   /// -ve slicing
         VP1::_sliceIndex += 1;
         SetDisplayListDistance(VP1::_sliceIndex);
-        ViewPort1::UpdateScene();
         break;
 
     case '1':   /// Front
         VP1::_xRot = 0;
         VP1::_yRot = 0;
         VP1::_zRot = 0;
-        ViewPort1::UpdateScene();
         break;
     case '2':   /// Back
         VP1::_xRot = 180;
         VP1::_yRot = 0;
         VP1::_zRot = 0;
-        ViewPort1::UpdateScene();
         break;
     case '3':   /// Top
         VP1::_xRot = -180;
         VP1::_yRot = 0;
         VP1::_zRot = 0;
-        ViewPort1::UpdateScene();
     case '4':   /// Bottom
         VP1::_xRot = -90;
         VP1::_yRot = 0;
         VP1::_zRot = 0;
-        ViewPort1::UpdateScene();
         break;
     case '5':   /// Left side
         VP1::_xRot = 0;
         VP1::_yRot = -90;
         VP1::_zRot = 0;
-        ViewPort1::UpdateScene();
         break;
     case '6':   /// Right side
         VP1::_xRot = 0;
         VP1::_yRot = 90;
         VP1::_zRot = 0;
-        ViewPort1::UpdateScene();
         break;
 
     case 'a':   /// X +ve rotation
         VP1::_xRot += 10.0;
         VP1::_xRot = (VP1::_xRot >= 360.0) ? 0.0 : VP1::_xRot;
-        ViewPort1::UpdateScene();
         break;
     case 'A':   /// X -ve rotation
         VP1::_xRot -= 10.0;
         VP1::_xRot = (VP1::_xRot < 0.0) ? 360.0 : VP1::_xRot;
-        ViewPort1::UpdateScene();
         break;
     case 's':   /// Y +ve rotation
         VP1::_yRot += 10.0;
         VP1::_yRot = (VP1::_yRot < 0.0) ? 360.0 : VP1::_yRot;
-        ViewPort1::UpdateScene();
         break;
     case 'S':   /// Y -ve rotation
         VP1::_yRot -= 10.0;
         VP1::_yRot = (VP1::_yRot < 0.0) ? 360.0 : VP1::_yRot;
-        ViewPort1::UpdateScene();
         break;
     case 'd':   /// Z +ve rotation
         VP1::_zRot += 10.0;
         VP1::_zRot = (VP1::_zRot >= 360.0) ? 0.0 : VP1::_zRot;
-        ViewPort1::UpdateScene();
         break;
     case 'D':   /// Z -ve rotation
         VP1::_zRot -= 10.0;
         VP1::_zRot = (VP1::_zRot < 0.0) ? 360.0 : VP1::_zRot;
-        ViewPort1::UpdateScene();
         break;
 
-
-
-
-
-
-
-
-
-
-
-
-    case 'q':
-        _rValueTF -= 0.05;
-        //            INFO("R : " + ITS(_rValueTF));
-        std::cout << "Hwllo";
-        ViewPort1::UpdateScene();
-        break;
-    case 'Q':
-        _rValueTF += 0.05;
-        //            INFO("R : " + ITS(_rValueTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 'w':
-        _gValueTF -= 0.05;
-        //            INFO("G : " + ITS(_gValueTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 'W':
-        _gValueTF += 0.05;
-        //            INFO("G : " + ITS(_gValueTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 'e':
-        _bValueTF -= 0.05;
-        //            INFO("B : " + ITS(_bValueTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 'E':
-        _bValueTF += 0.05;
-        //            INFO("B : " + ITS(_bValueTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 'r':
-        _aValueTF -= 0.05;
-        //            INFO("A : " + ITS(_aValueTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 'R':
-        _aValueTF += 0.05;
-        //            INFO("A : " + ITS(_aValueTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 't':
-        _desityThresholdTF -= 1;
-        //            INFO("A : " + ITS(_desityThresholdTF));
-        ViewPort1::UpdateScene();
-        break;
-    case 'T':
-        _desityThresholdTF += 1;
-        //            INFO("A : " + ITS(_desityThresholdTF));
-        ViewPort1::UpdateScene();
-        break;
-
-    case 'z':
+    case 'z':   /// +ve scaling
         VP1::_scale *= 0.9;
-        //            INFO("ZoomFactor: " + ITS(scaleFactor));
         break;
-    case 'Z':
+    case 'Z':   /// -ve scaling
         VP1::_scale *= 1.1;
-        //            INFO("ZoomFactor: " + ITS(scaleFactor));
-        break;
-    case 'x':
-        sliceArmDistance -= 0.05;
-        //            INFO("sliceArmDistance : " + ITS(sliceArmDistance));
-        SetDisplayList();
-        break;
-    case 'X':
-        sliceArmDistance += 0.05;
-        //            INFO("sliceArmDistance : " + ITS(sliceArmDistance));
-        SetDisplayList();
         break;
 
-    case 'O':
-        presSize += 0.05;
-        Display();
+    case 'q':   /// R transfer function
+        _rValueTF -= 0.05;
+        Volume::UpdateVolume();
         break;
-    case 'o':
-        presSize -= 0.05;
-        Display();
+    case 'Q':   /// R transfer function
+        _rValueTF += 0.05;
+        Volume::UpdateVolume();
         break;
-    case '*':
-        rotateState = !rotateState;
+    case 'w':   /// G transfer function
+        _gValueTF -= 0.05;
+        Volume::UpdateVolume();
         break;
-    case 'h':
-        //PrintHelp();
+    case 'W':   /// G transfer function
+        _gValueTF += 0.05;
+        Volume::UpdateVolume();
+        break;
+    case 'e':   /// B transfer function
+        _bValueTF -= 0.05;
+        Volume::UpdateVolume();
+        break;
+    case 'E':   /// B transfer function
+        _bValueTF += 0.05;
+        Volume::UpdateVolume();
+        break;
+    case 'r':   /// A transfer function
+        _aValueTF -= 0.05;
+        Volume::UpdateVolume();
+        break;
+    case 'R':   /// A transfer function
+        _aValueTF += 0.05;
+        Volume::UpdateVolume();
+        break;
+
+    case 't':   /// Threshold
+        _desityThresholdTF -= 1;
+        Volume::UpdateVolume();
+        break;
+    case 'T':   /// Threshold
+        _desityThresholdTF += 1;
+        Volume::UpdateVolume();
         break;
     case 27:
         delete [] _RGBAVolumeData;
         exit(0);
         break;
-
-
-
     }
 
-
-    glutPostRedisplay();
+    // Redisplay = glutPostRedisplay()
+    ViewPort1::Display();
+    ViewPort2::Display();
+    ViewPort3::Display();
+    ViewPort4::Display();
 }
 
 void ViewPort1::UpdateScene()
@@ -297,4 +236,4 @@ void ViewPort1::Reshape(int volumeWidth, int volumeHeight)
     glLoadIdentity();
 }
 
-#endif // VIEW_PORT_1_HPP
+#endif // VIEWPORT1_HPP

@@ -48,7 +48,7 @@ float xRotation         = 0.0;
 float yRotation         = 0.0;
 float zRotation         = 0.0;
 
-char rotateState = 0;
+bool rotateState = 0;
 
 // Slice XY half distance
 float sliceArmDistance = 0.5;
@@ -78,11 +78,18 @@ float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
 
+float _rValueTF = 1.0;
+float _gValueTF = 1.0;
+float _bValueTF = 1.0;
+float _aValueTF = 1.0;
+
 bool _slicingMode = true;
 
 int _sliceIndex = 0;
 
 GLuint listName;
+
+int _desityThresholdTF = 0;
 }
 
 /// Viewport 2 globals
@@ -94,20 +101,34 @@ float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
 
+float _rValueTF = 1.0;
+float _gValueTF = 1.0;
+float _bValueTF = 1.0;
+float _aValueTF = 1.0;
+
 bool _slicingMode = true;
 
 int _sliceIndex = 0;
 
 GLuint listName;
+
+int _desityThresholdTF = 0;
+
 }
 
 /// Viewport 3 globals
 namespace VP3
 {
 float _scale = 2.0f;
+
 float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
+
+float _rValueTF = 1.0;
+float _gValueTF = 1.0;
+float _bValueTF = 1.0;
+float _aValueTF = 1.0;
 
 
 GLuint listName;
@@ -132,6 +153,9 @@ vec3_t axis = {1.0, 0.0, 0.0};
 /* global rotation, for use with the mouse */
 vec3_t gRot = {0,0,0};
 
+int _desityThresholdTF = 0;
+
+
 }
 
 /// Viewport 4 globals
@@ -143,11 +167,19 @@ float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
 
+float _rValueTF = 1.0;
+float _gValueTF = 1.0;
+float _bValueTF = 1.0;
+float _aValueTF = 1.0;
+
 bool _slicingMode = true;
 
 int _sliceIndex = 0;
 
 GLuint listName;
+
+int _desityThresholdTF = 0;
+
 }
 
 

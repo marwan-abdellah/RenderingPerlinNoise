@@ -20,4 +20,6 @@ GLuint screenHeight;
 GLvoid *fontStyleGL = GLUT_BITMAP_TIMES_ROMAN_10;
 
 
+
+
 #endif // SHARED_H

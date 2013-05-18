@@ -55,7 +55,7 @@ void Volume::ReadHeader(char *prefix,
     INFO("Reading the volume header Done");
 }
 
-void Volume::UpdateVolume()
+void Volume::UpdateVolume(void)
 {
     // Poiter to the volume image
     GLubyte *ptr = _lumVolumeData;
