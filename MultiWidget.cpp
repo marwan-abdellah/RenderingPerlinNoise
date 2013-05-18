@@ -7,6 +7,12 @@
 #include "MainScene.hpp"
 #include "ViewPort1.hpp"
 
+#include "Utils.h"
+#include "VolumeSharedData.h"
+#include "ReadVolume.hpp"
+
+#include "DisplayList.hpp"
+
 using namespace std;
 
 void mainReshape(int width,  int height);
@@ -18,6 +24,11 @@ void View4Display();
 ///
 int main(int argc, char** argv)
 {
+
+    // Read Volume
+
+    Volume::ReadVolume("/home/abdellah/Software/Datasets/CTData/CTData");
+
 
 
 
@@ -92,6 +103,43 @@ int main(int argc, char** argv)
     view4 = glutCreateSubWindow(window, GAP + viewportWidth + GAP,
                                 GAP + viewportHeight + GAP, viewportWidth, viewportHeight);
     glutDisplayFunc(View4Display);
+
+    // Clearing color buffer
+    glClearColor (0.0, 0.0, 0.0, 0.0);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    // Generating texture ID and binding it to the GPU
+    glGenTextures(1, &volumeTexID);
+    glBindTexture(GL_TEXTURE_3D, volumeTexID);
+
+    // Adjusting the texture parameters
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    // For automatic texture coordinate generation
+    glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
+    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
+    glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
+
+    // Allocating the texture on the GPU
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA,
+                 _volumeWidth, _volumeHeight, _volumeDepth, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, _RGBAVolumeData);
+
+    // Enable texturing
+    glEnable(GL_TEXTURE_GEN_S);
+    glEnable(GL_TEXTURE_GEN_T);
+    glEnable(GL_TEXTURE_GEN_R);
+
+    // Setting the blending function & enabling blending
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+
+    // Setting the display list
+    SetDisplayList();
 
     /// MAIN LOOP ! Should be multi-threaded
     glutMainLoop();

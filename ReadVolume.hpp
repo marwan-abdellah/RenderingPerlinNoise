@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
+#include <fstream>
 
 #include "Shared.h"
 #include "GL_Utils.h"
@@ -15,8 +16,8 @@ using namespace std;
 namespace Volume
 {
 void ReadHeader(char *prefix, int &volWidth, int &volHeight, int &volDepth);
-void Volume::UpdateVolume();
-void Volume::ReadVolume(char *prefix);
+void UpdateVolume();
+void ReadVolume(char *prefix);
 }
 
 void Volume::ReadHeader(char *prefix,
@@ -72,15 +73,15 @@ void Volume::UpdateVolume()
                     if (((i < 4) && (j < 4)) ||
                             ((j < 4) && (k < 4)) ||
                             ((k < 4) && (i < 4)) ||
-                            ((i < 4) && (j >  iHeight-5)) ||
-                            ((j < 4) && (k > iWidth-5)) ||
-                            ((k < 4) && (i > iDepth-5)) ||
-                            ((i > iDepth-5) && (j >  iHeight-5)) ||
-                            ((j >  iHeight-5) && (k > iWidth-5)) ||
-                            ((k > iWidth-5) && (i > iDepth-5)) ||
-                            ((i > iDepth-5) && (j < 4)) ||
-                            ((j >  iHeight-5) && (k < 4)) ||
-                            ((k > iWidth-5) && (i < 4))) {
+                            ((i < 4) && (j >  _volumeHeight-5)) ||
+                            ((j < 4) && (k > _volumeWidth-5)) ||
+                            ((k < 4) && (i > _volumeDepth-5)) ||
+                            ((i > _volumeDepth-5) && (j >  _volumeHeight-5)) ||
+                            ((j >  _volumeHeight-5) && (k > _volumeWidth-5)) ||
+                            ((k > _volumeWidth-5) && (i > _volumeDepth-5)) ||
+                            ((i > _volumeDepth-5) && (j < 4)) ||
+                            ((j >  _volumeHeight-5) && (k < 4)) ||
+                            ((k > _volumeWidth-5) && (i < 4))) {
                         *ptr = 110;
                     }
                     ptr++;
@@ -101,20 +102,20 @@ void Volume::UpdateVolume()
     GLubyte rgbaVal, luminanceVal;
 
     // Reading the luminance volume and constructing the RGBA volume
-    for (int i = 0; i < numVoxels; i++)
+    for (int i = 0; i < _volNumVoxels; i++)
     {
         rgbaVal = *(ptr++);
 
         // Area of interest
-        luminanceVal = (rgbaVal < desityThresholdTF) ? 0 : rgbaVal - desityThresholdTF;
+        luminanceVal = (rgbaVal < _desityThresholdTF) ? 0 : rgbaVal - _desityThresholdTF;
 
         // Division by 2
         luminanceVal = luminanceVal >> 1;
 
-        *(qtr++) = ((float)luminanceVal) * rValueTF;
-        *(qtr++) = ((float)luminanceVal) * gValueTF;
-        *(qtr++) = ((float)luminanceVal) * bValueTF;
-        *(qtr++) = ((float)luminanceVal) * aValueTF;
+        *(qtr++) = ((float)luminanceVal) * _rValueTF;
+        *(qtr++) = ((float)luminanceVal) * _gValueTF;
+        *(qtr++) = ((float)luminanceVal) * _bValueTF;
+        *(qtr++) = ((float)luminanceVal) * _aValueTF;
     }
 }
 
@@ -131,13 +132,13 @@ void Volume::ReadVolume(char *prefix)
     INFO("Reading the volume file ");
 
     // Total number of voxels
-    const int numVoxels = _volumeWidth * _volumeHeight * _volumeDepth;
+    _volNumVoxels = _volumeWidth * _volumeHeight * _volumeDepth;
 
     // Allocating the luminance image
-    _lumVolumeData = new GLubyte [numVoxels];
+    _lumVolumeData = new GLubyte [_volNumVoxels];
 
     // Allocating the RGBA image
-    _RGBAVolumeData = new GLubyte [numVoxels * 4];
+    _RGBAVolumeData = new GLubyte [_volNumVoxels * 4];
 
     // Reading the volume image (luminance values)
     inputFileStream.open(imgFile, ios::in);
@@ -148,7 +149,7 @@ void Volume::ReadVolume(char *prefix)
     }
 
     // Read the image byte by byte
-    inputFileStream.read((char *)_lumVolumeData, numVoxels);
+    inputFileStream.read((char *)_lumVolumeData, _volNumVoxels);
 
     // Closing the input volume stream
     inputFileStream.close();

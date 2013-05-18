@@ -5,6 +5,12 @@
 #include <string.h>
 #include <stdio.h>
 
+#define COUT std::cout
+#define ENDL std::endl
+#define STRG std::string
+#define TAB  "       "
+#define LINE "_________________________________________________" << ENDL
+
 #define INFO( MESSAGE )                                         			\
 COUT << STRG( __FILE__ ) << ":[" << ( __LINE__ ) << "]" <<      			\
 ENDL << TAB << "* " << STRG( __FUNCTION__ ) << TAB <<          				\
