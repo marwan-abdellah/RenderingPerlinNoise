@@ -75,8 +75,12 @@ void SetDisplayListDistance(float distance)
     // Number of slices (including the central one)
     int nSlices      = 2 * nHSlices + 1;
 
+    int nElements;
     // Number of lements (verticies)
-    int nElements    = 4;
+    if (VP1::_slicingMode)
+        nElements   = 4;
+    else
+        nElements   = 4 * nSlices;
 
     // Total number of points
     GLfloat *vPoints    = new GLfloat [3 * nElements];
@@ -84,13 +88,9 @@ void SetDisplayListDistance(float distance)
     float dDist         = (sqrt(3.0) / nSlices);
     float halfDistance  = sliceArmDistance;
 
-
-//for (i = -nHSlices; i <= nHSlices; i++)
-    i = (int) distance;
-  //  std::cout << "nHSlices " << nHSlices <<std::endl;
-    //std::cout << "Distance " << i <<std::endl;
+    if (VP1::_slicingMode)
     {
-        // Sampling
+        i = (int) distance;
         dist     = i * dDist;
 
         *(ptr++) = -halfDistance;
@@ -109,7 +109,32 @@ void SetDisplayListDistance(float distance)
         *(ptr++) =  halfDistance;
         *(ptr++) =  dist;
     }
-    // std::cout << "dist " << dist <<std::endl;
+    else
+    {
+        for (i = -nHSlices; i <= nHSlices; i++)
+        {
+            // Sampling
+            dist     = i * dDist;
+
+            *(ptr++) = -halfDistance;
+            *(ptr++) = -halfDistance;
+            *(ptr++) =  dist;
+
+            *(ptr++) =  halfDistance;
+            *(ptr++) = -halfDistance;
+            *(ptr++) =  dist;
+
+            *(ptr++) =  halfDistance;
+            *(ptr++) =  halfDistance;
+            *(ptr++) =  dist;
+
+            *(ptr++) = -halfDistance;
+            *(ptr++) =  halfDistance;
+            *(ptr++) =  dist;
+        }
+    }
+
+
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, vPoints);

@@ -88,15 +88,15 @@ void DrawScene2()
 
     if (glutGetWindow() == view1)
     {
-        glRotatef(0, 0.0, 0.0, 1.0);
-        glRotatef(0, 0.0, 1.0, 0.0);
-        glRotatef(0, 1.0, 0.0, 0.0);
+        glRotatef(VP1::_xRot, 0.0, 0.0, 1.0);
+        glRotatef(VP1::_yRot, 0.0, 1.0, 0.0);
+        glRotatef(VP1::_zRot, 1.0, 0.0, 0.0);
     }
     else if (glutGetWindow() == view2)
     {
-        glRotatef(90, 0.0, 0.0, 1.0);
-        glRotatef(0, 0.0, 1.0, 0.0);
-        glRotatef(0, 1.0, 0.0, 0.0);
+        glRotatef(VP2::_xRot, 0.0, 0.0, 1.0);
+        glRotatef(VP2::_yRot, 0.0, 1.0, 0.0);
+        glRotatef(VP2::_zRot, 1.0, 0.0, 0.0);
     }
     else if (glutGetWindow() == view3)
     {
@@ -106,9 +106,9 @@ void DrawScene2()
     }
     else
     {
-        glRotatef(0, 0.0, 0.0, 1.0);
-        glRotatef(90, 0.0, 1.0, 0.0);
-        glRotatef(0, 1.0, 0.0, 0.0);
+        glRotatef(VP4::_xRot, 0.0, 0.0, 1.0);
+        glRotatef(VP4::_yRot, 0.0, 1.0, 0.0);
+        glRotatef(VP4::_zRot, 1.0, 0.0, 0.0);
     }
 
     // center the cube

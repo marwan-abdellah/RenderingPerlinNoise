@@ -56,7 +56,7 @@ float sliceArmDistance = 0.5;
 // Total number of slices
 int numSlices = 256;
 
-int xDistance = 0;
+
 
 // Orthographic projection parameter
 GLfloat presSize = 1.0;
@@ -73,9 +73,14 @@ float _scaleW4  = 0.5;
 namespace VP1
 {
 float _scale = 2.0f;
+
 float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
+
+bool _slicingMode = true;
+
+int _sliceIndex = 0;
 
 GLuint listName;
 }
@@ -84,9 +89,14 @@ GLuint listName;
 namespace VP2
 {
 float _scale = 2.0f;
+
 float _xRot = 0.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
+
+bool _slicingMode = true;
+
+int _sliceIndex = 0;
 
 GLuint listName;
 }
@@ -128,9 +138,14 @@ vec3_t gRot = {0,0,0};
 namespace VP4
 {
 float _scale = 2.0f;
-float _xRot = 1.0f;
-float _yRot = 1.0f;
-float _zRot = 1.0;
+
+float _xRot = 0.0f;
+float _yRot = 0.0f;
+float _zRot = 0.0;
+
+bool _slicingMode = true;
+
+int _sliceIndex = 0;
 
 GLuint listName;
 }
