@@ -1,9 +1,10 @@
 #ifndef DISPLAYLIST_HPP
 #define DISPLAYLIST_HPP
 
-#include <GL/glut.h>
 #include <iostream>
 #include <math.h>
+#include <GL/glut.h>
+
 #include "Utils.h"
 #include "VolumeSharedData.h"
 
@@ -14,14 +15,15 @@ void SetDisplayList(void)
     int i;
 
     // Number of half slice
-    int nHSlices     = 1.3 * numSlices / 4;
-    // int nHSlices = 1.3 * (sqrt(float(iWidth*iWidth + iHeight*iHeight + iDepth*iDepth)))/4.0;
+    int nHSlices = 1.3 * (sqrt(float(_volumeWidth * _volumeWidth +
+                                     _volumeHeight * _volumeHeight +
+                                     _volumeDepth * _volumeDepth)))/4.0;
 
     // Number of slices (including the central one)
-    int nSlices      = 2 * nHSlices + 1;
+    int nSlices = 2 * nHSlices + 1;
 
-    // Number of lements (verticies)
-    int nElements    = nSlices*4;
+    // Number of elements (verticies)
+    int nElements = nSlices*4;
 
     // Total number of points
     GLfloat *vPoints    = new GLfloat [3 * nElements];
@@ -32,7 +34,6 @@ void SetDisplayList(void)
 
     for (i = -nHSlices; i <= nHSlices; i++)
     {
-        // Sampling
         dist     = i * dDist;
 
         *(ptr++) = -halfDistance;
@@ -68,14 +69,15 @@ void SetDisplayListDistance(float distance)
     int i;
 
     // Number of half slice
-    int nHSlices = 1.3 * (sqrt(float(_volumeWidth * _volumeWidth+
-                                     _volumeHeight * _volumeHeight+ _volumeDepth * _volumeDepth)))/4.0;
+    int nHSlices = 1.3 * (sqrt(float(_volumeWidth * _volumeWidth +
+                                     _volumeHeight * _volumeHeight +
+                                     _volumeDepth * _volumeDepth)))/4.0;
 
     // Number of slices (including the central one)
     int nSlices      = 2 * nHSlices + 1;
 
     int nElements;
-    // Number of lements (verticies)
+    // Number of elements (verticies)
     if (VP1::_slicingMode)
         nElements   = 4;
     else
@@ -90,7 +92,6 @@ void SetDisplayListDistance(float distance)
     if (VP1::_slicingMode)
     {
         {
-            // Sampling
             dist     = distance * dDist;
 
             *(ptr++) = -halfDistance;
@@ -114,7 +115,6 @@ void SetDisplayListDistance(float distance)
     {
         for (i = -nHSlices; i <= nHSlices; i++)
         {
-            // Sampling
             dist     = i * dDist;
 
             *(ptr++) = -halfDistance;

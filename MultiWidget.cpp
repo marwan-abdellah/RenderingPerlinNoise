@@ -14,37 +14,20 @@
 #include "Utils.h"
 #include "VolumeSharedData.h"
 #include "ReadVolume.hpp"
-
 #include "DisplayList.hpp"
-
 #include "Textures.h"
 
 using namespace std;
 
+/// Prototypes
 void mainReshape(int width,  int height);
+void mainDisplay(void);
 
-
-
-
-
-void IdelMain()
-{
-//ViewPort1::Display();
-}
-
-///
+/// Main
 int main(int argc, char** argv)
 {
-
     // Read Volume
-
     Volume::ReadVolume("/home/abdellah/Software/Datasets/CTData/CTData");
-
-
-
-
-
-
 
     // GLUT initialization
     glutInit(&argc, argv);
@@ -84,7 +67,6 @@ int main(int argc, char** argv)
     // Main window callback function
     glutReshapeFunc(mainReshape);
     glutDisplayFunc(mainDisplay);
-    glutIdleFunc(IdelMain);
 
     // Calculating the viewports dimensions
     const float viewportWidth = screenWidth / 4;
@@ -93,42 +75,32 @@ int main(int argc, char** argv)
     subWinWidth = viewportWidth;
     subWinHeight = viewportHeight;
 
-
-
-
-    // View 1 viewport
+    // View 1
     view1 = glutCreateSubWindow(window, GAP, GAP,
                                 viewportWidth, viewportHeight);
-
     ViewPort1::RegisterCallBacks();
-
     Texture::Init();
 
 
-    // View 2 viewport
+    // View 2
     view2 = glutCreateSubWindow(window, GAP + viewportWidth + GAP,
                                 GAP, viewportWidth, viewportHeight);
     ViewPort2::RegisterCallBacks();
-
     Texture::Init();
 
-    // View 3 viewport
+    // View 3
     view3 = glutCreateSubWindow(window, GAP+viewportWidth+GAP,
-                                GAP + viewportHeight + GAP, viewportWidth, viewportHeight);
+                                GAP + viewportHeight + GAP,
+                                viewportWidth, viewportHeight);
     ViewPort3::RegisterCallBacks();
-
     Texture::Init();
 
-     // View 4 viewport
+     // View 4
     view4 = glutCreateSubWindow(window, GAP + viewportWidth + GAP,
-                                GAP + viewportHeight + GAP, viewportWidth, viewportHeight);
+                                GAP + viewportHeight + GAP,
+                                viewportWidth, viewportHeight);
     ViewPort4::RegisterCallBacks();
-
     Texture::Init();
-
-
-
-
 
     /// MAIN LOOP ! Should be multi-threaded
     glutMainLoop();
@@ -136,7 +108,7 @@ int main(int argc, char** argv)
     return 0;
 }
 
-///
+/// Main widget display
 void mainDisplay(void)
 {
     // Background Color
@@ -167,8 +139,7 @@ void mainDisplay(void)
     glutSwapBuffers();
 }
 
-
-///
+/// Main widget reshaping
 void mainReshape(int width,  int height)
 {
     // Main view setting
@@ -204,34 +175,3 @@ void mainReshape(int width,  int height)
     glutReshapeWindow(subWinWidth, subWinHeight);
     // glutReshapeWindow(subWinWidth + GAP + subWinWidth, subWinHeight);
 }
-
-
-
-
-
-/// Display Viewport 4
-void View4Display()
-{
-
-    // Reset viewport
-    ResetViewport();
-    cout << "d4 \n";
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1.0, 1.0, 1.0);
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    gluPerspective(30, 1.0, 3.0, 50.0);
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    gluLookAt(5.0, 5.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    DrawScene2();
-    glPopMatrix();
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glFlush();
-    glutSwapBuffers();
-}
-
-
-

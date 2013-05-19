@@ -20,6 +20,7 @@ void UpdateVolume();
 void ReadVolume(char *prefix);
 }
 
+/// Reading header
 void Volume::ReadHeader(char *prefix,
                         int &volWidth,
                         int &volHeight,
@@ -55,6 +56,7 @@ void Volume::ReadHeader(char *prefix,
     INFO("Reading the volume header Done");
 }
 
+/// Updating volume
 void Volume::UpdateVolume(void)
 {
     // Poiter to the volume image
@@ -107,7 +109,8 @@ void Volume::UpdateVolume(void)
         rgbaVal = *(ptr++);
 
         // Area of interest
-        luminanceVal = (rgbaVal < _desityThresholdTF) ? 0 : rgbaVal - _desityThresholdTF;
+        luminanceVal =
+            (rgbaVal < _desityThresholdTF) ? 0 : rgbaVal - _desityThresholdTF;
 
         // Division by 2
         luminanceVal = luminanceVal >> 1;
@@ -119,6 +122,7 @@ void Volume::UpdateVolume(void)
     }
 }
 
+/// Reading volume
 void Volume::ReadVolume(char *prefix)
 {
     char imgFile[100];
@@ -147,7 +151,6 @@ void Volume::ReadVolume(char *prefix)
         INFO("Could not open the volume file");
         EXIT(0);
     }
-
     // Read the image byte by byte
     inputFileStream.read((char *)_lumVolumeData, _volNumVoxels);
 

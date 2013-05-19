@@ -48,14 +48,13 @@ void ViewPort1::Idle()
     glutSetWindow(currentWindow);
 }
 
-/// Display Viewport 1
 void ViewPort1::Display()
 {
 
     glutSetWindow(view1);
     glClear(GL_COLOR_BUFFER_BIT);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    DrawScene2();
+    DrawScene();
     glFlush();
     glutSwapBuffers();
 
@@ -63,22 +62,21 @@ void ViewPort1::Display()
 
 void ViewPort1::glutMouse(int button, int state, int x, int y)
 {
-
     if (state == GLUT_UP )
+    {
+        if ( button == GLUT_WHEEL_UP  && VP1::_slicingMode)
         {
-            if ( button == GLUT_WHEEL_UP  && VP1::_slicingMode)
-            {
-                VP1::_sliceIndex += 1;
-                SetDisplayListDistance(VP1::_sliceIndex);
-            }
-            else if( button == GLUT_WHEEL_DOWN && VP1::_slicingMode)
-            {
-                VP1::_sliceIndex -= 1;
-                SetDisplayListDistance(VP1::_sliceIndex);
-            }
+            VP1::_sliceIndex += 1;
+            SetDisplayListDistance(VP1::_sliceIndex);
         }
+        else if( button == GLUT_WHEEL_DOWN && VP1::_slicingMode)
+        {
+            VP1::_sliceIndex -= 1;
+            SetDisplayListDistance(VP1::_sliceIndex);
+        }
+    }
 
-    DrawScene2();
+    DrawScene();
 }
 
 void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
@@ -209,7 +207,7 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
     }
 
     // Redisplay = glutPostRedisplay()
-    DrawScene2();
+    DrawScene();
 }
 
 void ViewPort1::UpdateScene()

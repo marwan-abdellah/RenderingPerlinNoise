@@ -7,35 +7,8 @@
 #include "Utils.h"
 #include "DisplayList.hpp"
 
-
-/// Prototypes
-void mainDisplay(void);
-
-/// Scene Data
+/// Rendering volume
 void DrawScene()
-{
-    glColor3f(0.7, 0.7, 0.7);
-    glPushMatrix();
-    //glTranslatef(0.0, -1.0, 0.0);
-
-    glBegin(GL_QUADS);
-    glVertex3f(2.0, 0.0, 2.0);
-    glVertex3f(2.0, 0.0, -2.0);
-    glVertex3f(-2.0, 0.0, -2.0);
-    glVertex3f(-2.0, 0.0, 2.0);
-    glEnd();
-
-    glPopMatrix();
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-    glTranslatef(0.0, 0.0, -0.5);
-    glutWireTeapot(1.0);
-    glPopMatrix();
-
-
-}
-
-void DrawScene2()
 {
 
     // Enabling 3D texturing
@@ -43,11 +16,11 @@ void DrawScene2()
 
     // Update texture and upload it to the GPU
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-    glBindTexture(GL_TEXTURE_3D, volumeTexID);
+    glBindTexture(GL_TEXTURE_3D, _volumeTexID);
 
     glTexSubImage3D(GL_TEXTURE_3D, 0, 0, 0, 0,
-                    _volumeWidth, _volumeHeight, _volumeDepth, GL_RGBA, GL_UNSIGNED_BYTE, _RGBAVolumeData);
-
+                    _volumeWidth, _volumeHeight, _volumeDepth,
+                    GL_RGBA, GL_UNSIGNED_BYTE, _RGBAVolumeData);
 
     // Cleraing color buffers
     glClear(GL_COLOR_BUFFER_BIT);
@@ -79,13 +52,11 @@ void DrawScene2()
     else
         scaleFactor = VP4::_scale;
 
-
     glScalef(scaleFactor, scaleFactor, scaleFactor);
 
     glPushMatrix ();
 
     // Transform the viewing direction
-
     if (glutGetWindow() == view1)
     {
         glRotatef(VP1::_xRot, 0.0, 0.0, 1.0);
@@ -122,10 +93,8 @@ void DrawScene2()
 
     glClipPlane(GL_CLIP_PLANE0, eqx0);
     glClipPlane(GL_CLIP_PLANE1, eqx1);
-
     glClipPlane(GL_CLIP_PLANE2, eqy0);
     glClipPlane(GL_CLIP_PLANE3, eqy1);
-
     glClipPlane(GL_CLIP_PLANE4, eqz0);
     glClipPlane(GL_CLIP_PLANE5, eqz1);
 
@@ -141,10 +110,10 @@ void DrawScene2()
 
     // Rendering the diaply list of the rectangles
     if (glutGetWindow() == view1)
-            glCallList(VP1::listName);
+        glCallList(VP1::listName);
 
     else
-            glCallList(listName);
+        glCallList(listName);
 
     glPopMatrix ();
 
