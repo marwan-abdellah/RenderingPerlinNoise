@@ -119,9 +119,9 @@ int _desityThresholdTF = 0;
 /// Viewport 3 globals
 namespace VP3
 {
-float _scale = 2.0f;
+float _scale = 1.0f;
 
-float _xRot = 0.0f;
+float _xRot = 45.0f;
 float _yRot = 0.0f;
 float _zRot = 0.0;
 
@@ -130,8 +130,6 @@ float _gValueTF = 1.0;
 float _bValueTF = 1.0;
 float _aValueTF = 1.0;
 
-
-GLuint listName;
 
 
 /* old position of the mouse */
@@ -151,7 +149,7 @@ float rotate = 0.0f;
 vec3_t axis = {1.0, 0.0, 0.0};
 
 /* global rotation, for use with the mouse */
-vec3_t gRot = {0,0,0};
+vec3_t gRot = {45,0,45};
 
 int _desityThresholdTF = 0;
 

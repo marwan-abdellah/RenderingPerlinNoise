@@ -4,6 +4,9 @@
 #include "Shared.h"
 #include "GL_Utils.h"
 
+# define GLUT_WHEEL_UP 3
+# define GLUT_WHEEL_DOWN 4
+
 /// Prototypes
 void SetFontParams(char* name, int size);
 void DrawString(GLuint x, GLuint y, const char* format, int length);

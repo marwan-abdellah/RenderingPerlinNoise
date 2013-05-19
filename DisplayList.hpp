@@ -68,7 +68,6 @@ void SetDisplayListDistance(float distance)
     int i;
 
     // Number of half slice
-    // int nHSlices     = 1.3 * numSlices /4;
     int nHSlices = 1.3 * (sqrt(float(_volumeWidth * _volumeWidth+
                                      _volumeHeight * _volumeHeight+ _volumeDepth * _volumeDepth)))/4.0;
 
@@ -90,24 +89,26 @@ void SetDisplayListDistance(float distance)
 
     if (VP1::_slicingMode)
     {
-        i = (int) distance;
-        dist     = i * dDist;
+        {
+            // Sampling
+            dist     = distance * dDist;
 
-        *(ptr++) = -halfDistance;
-        *(ptr++) = -halfDistance;
-        *(ptr++) =  dist;
+            *(ptr++) = -halfDistance;
+            *(ptr++) = -halfDistance;
+            *(ptr++) =  dist;
 
-        *(ptr++) =  halfDistance;
-        *(ptr++) = -halfDistance;
-        *(ptr++) =  dist;
+            *(ptr++) =  halfDistance;
+            *(ptr++) = -halfDistance;
+            *(ptr++) =  dist;
 
-        *(ptr++) =  halfDistance;
-        *(ptr++) =  halfDistance;
-        *(ptr++) =  dist;
+            *(ptr++) =  halfDistance;
+            *(ptr++) =  halfDistance;
+            *(ptr++) =  dist;
 
-        *(ptr++) = -halfDistance;
-        *(ptr++) =  halfDistance;
-        *(ptr++) =  dist;
+            *(ptr++) = -halfDistance;
+            *(ptr++) =  halfDistance;
+            *(ptr++) =  dist;
+        }
     }
     else
     {
@@ -133,7 +134,6 @@ void SetDisplayListDistance(float distance)
             *(ptr++) =  dist;
         }
     }
-
 
 
     glEnableClientState(GL_VERTEX_ARRAY);

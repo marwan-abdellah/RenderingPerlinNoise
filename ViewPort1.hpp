@@ -25,6 +25,7 @@ void RegisterCallBacks();
 void UpdateScene();
 void Idle();
 void Reshape(int volumeWidth, int volumeHeight);
+void glutMouse(int button, int state, int x, int y);
 }
 
 void ViewPort1::RegisterCallBacks()
@@ -33,6 +34,7 @@ void ViewPort1::RegisterCallBacks()
     glutKeyboardFunc(ViewPort1::Keyboard);
     glutIdleFunc(ViewPort1::Idle);
     glutReshapeFunc(ViewPort1::Reshape);
+    glutMouseFunc(ViewPort1::glutMouse);
 }
 
 void ViewPort1::Idle()
@@ -51,37 +53,32 @@ void ViewPort1::Display()
 {
 
     glutSetWindow(view1);
-
-    // Reset viewport
-    //ResetViewport();
-    cout << "d1 \n";
-    //    glClear(GL_COLOR_BUFFER_BIT);
-
-    //    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    //    glColor3f(1.0, 1.0, 1.0);
-    //    glMatrixMode(GL_PROJECTION);
-    //    glPushMatrix();
-    //    glLoadIdentity();
-    //    gluPerspective(30, 1.0, 3.0, 50.0);
-    //    glMatrixMode(GL_MODELVIEW);
-    //    glPushMatrix();
-    //    gluLookAt(0, 0, -4.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    //    DrawScene2();
-    //    glPopMatrix();
-    //    glMatrixMode(GL_PROJECTION);
-    //    glPopMatrix();
-
-
-    // Reset viewport
-    //ResetViewport();
     glClear(GL_COLOR_BUFFER_BIT);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-
     DrawScene2();
     glFlush();
     glutSwapBuffers();
 
+}
+
+void ViewPort1::glutMouse(int button, int state, int x, int y)
+{
+
+    if (state == GLUT_UP )
+        {
+            if ( button == GLUT_WHEEL_UP  && VP1::_slicingMode)
+            {
+                VP1::_sliceIndex += 1;
+                SetDisplayListDistance(VP1::_sliceIndex);
+            }
+            else if( button == GLUT_WHEEL_DOWN && VP1::_slicingMode)
+            {
+                VP1::_sliceIndex -= 1;
+                SetDisplayListDistance(VP1::_sliceIndex);
+            }
+        }
+
+    DrawScene2();
 }
 
 void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
@@ -165,45 +162,46 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
 
     case 'q':   /// R transfer function
         _rValueTF -= 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'Q':   /// R transfer function
         _rValueTF += 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'w':   /// G transfer function
         _gValueTF -= 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'W':   /// G transfer function
         _gValueTF += 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'e':   /// B transfer function
         _bValueTF -= 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'E':   /// B transfer function
         _bValueTF += 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'r':   /// A transfer function
         _aValueTF -= 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'R':   /// A transfer function
         _aValueTF += 0.05;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
 
     case 't':   /// Threshold
         _desityThresholdTF -= 1;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
     case 'T':   /// Threshold
         _desityThresholdTF += 1;
-        Volume::UpdateVolume();
+        ViewPorts::UpdateAll();
         break;
+
     case 27:
         delete [] _RGBAVolumeData;
         exit(0);
@@ -211,15 +209,12 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
     }
 
     // Redisplay = glutPostRedisplay()
-    ViewPort1::Display();
-    ViewPort2::Display();
-    ViewPort3::Display();
-    ViewPort4::Display();
+    DrawScene2();
 }
 
 void ViewPort1::UpdateScene()
 {
-    Volume::UpdateVolume();
+    ViewPorts::UpdateAll();
     ViewPort1::Display();
 }
 

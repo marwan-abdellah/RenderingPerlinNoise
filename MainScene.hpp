@@ -142,6 +142,7 @@ void DrawScene2()
     // Rendering the diaply list of the rectangles
     if (glutGetWindow() == view1)
             glCallList(VP1::listName);
+
     else
             glCallList(listName);
 
