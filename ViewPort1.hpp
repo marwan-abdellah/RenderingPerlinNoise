@@ -34,6 +34,7 @@
 #include "ReadVolume.hpp"
 
 #include "ViewPorts.h"
+#include "CreateNoiseVolume.hpp"
 
 using namespace std;
 namespace ViewPort1
@@ -216,6 +217,51 @@ void ViewPort1::Keyboard(unsigned char fKey, int fX, int fY)
         break;
     case 'T':   /// Threshold
         _desityThresholdTF += 1;
+        ViewPorts::UpdateAll();
+        break;
+
+    case 'v':   /// Noise
+        _octaves -= 1;
+        std::cout << "Octave " << _octaves << std::endl;
+        UpdateNoise();
+        Volume::UpdateVolume() ;
+        ViewPorts::UpdateAll();
+        break;
+    case 'V':   /// Noise
+        _octaves += 1;
+        std::cout << "Octave " << _octaves << std::endl;
+        UpdateNoise();
+        Volume::UpdateVolume() ;
+        ViewPorts::UpdateAll();
+        break;
+
+    case 'b':   /// Noise
+        _persistence -= 1;
+        std::cout << "Persistance " << _persistence << std::endl;
+        UpdateNoise();
+        Volume::UpdateVolume() ;
+        ViewPorts::UpdateAll();
+        break;
+    case 'B':   /// Noise
+        _persistence += 1;
+        UpdateNoise();
+        Volume::UpdateVolume() ;
+        ViewPorts::UpdateAll();
+        std::cout << "Persistance " << _persistence << std::endl;
+        break;
+
+    case 'n':   /// Noise
+        _scale -= 0.05;
+        std::cout << "Scale " << _scale << std::endl;
+        UpdateNoise();
+        Volume::UpdateVolume() ;
+        ViewPorts::UpdateAll();
+        break;
+    case 'N':   /// Noise
+        _scale += 0.05;
+        std::cout << "Scale " << _scale << std::endl;
+        UpdateNoise();
+        Volume::UpdateVolume() ;
         ViewPorts::UpdateAll();
         break;
 

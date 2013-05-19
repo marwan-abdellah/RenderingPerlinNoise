@@ -70,6 +70,11 @@ float sliceArmDistance = 0.5;
 /// Orthographic projection parameter
 GLfloat presSize = 1.0;
 
+/// Noise parameters
+float _octaves = 1;
+float _persistence = 1;
+float _scale = 0.01;
+
 /// Viewport 1 globals
 namespace VP1
 {

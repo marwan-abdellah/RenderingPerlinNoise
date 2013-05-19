@@ -35,6 +35,9 @@
 #include "ReadVolume.hpp"
 #include "DisplayList.hpp"
 #include "Textures.h"
+#include "CreateSphere.hpp"
+
+#include "CreateNoiseVolume.hpp"
 
 using namespace std;
 
@@ -46,7 +49,23 @@ void mainDisplay(void);
 int main(int argc, char** argv)
 {
     // Read Volume
-    Volume::ReadVolume("/home/abdellah/Software/Datasets/CTData/CTData");
+    // Volume::ReadVolume("/home/abdellah/Software/Datasets/CTData/CTData");
+    // _lumVolumeData = CreateBigSphere(256, 256, 256);
+
+
+   _volumeWidth = 256;
+   _volumeHeight = 256;
+   _volumeDepth = 256;
+   _volNumVoxels = _volumeWidth * _volumeHeight * _volumeDepth;
+
+   INFO("Creating noise");
+    _lumVolumeData = CreateNoiseVolume(_volumeWidth, _volumeHeight, _volumeDepth);
+    INFO("Boise creation done ");
+
+    // Allocating the RGBA image
+    _RGBAVolumeData = (GLubyte*) malloc (sizeof(GLubyte) * _volNumVoxels * 4);
+
+     Volume::UpdateVolume();
 
     // GLUT initialization
     glutInit(&argc, argv);

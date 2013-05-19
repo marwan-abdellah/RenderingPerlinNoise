@@ -83,6 +83,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
 #########################################################
 #! Link the executable against the cuYURI library
 #########################################################
-ADD_EXECUTABLE(runMWindow MultiWindow.cpp)
-ADD_EXECUTABLE(runMWidget MultiWidget.cpp)
+ADD_EXECUTABLE(runMWindow MultiWindow.cpp simplexnoise.cpp simplextextures.cpp)
+ADD_EXECUTABLE(runMWidget MultiWidget.cpp simplexnoise.cpp simplextextures.cpp)
 
